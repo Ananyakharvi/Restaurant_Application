@@ -2,7 +2,7 @@ package com.restaurant.dto;
 
 import java.sql.Date;
 
-public class Restaurant_tableDto {
+public class Restaurant_table {
   private Integer t_id;
   private Integer capacity;
   private String status;

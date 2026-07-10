@@ -10,5 +10,5 @@ public interface CustomerDao {
 	List<Customer> getAllCustomer();
 	void updateCustomer(Customer c);
 	Customer getByEmailAndPassword(String email, String c_pswd);
-	void deleteCustomer(Customer c_id);
+	void deleteCustomer(Integer c_id);
 }

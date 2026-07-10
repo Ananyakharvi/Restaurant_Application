@@ -9,5 +9,5 @@ public interface Menu_itemDao {
 	Menu_item getById(Integer m_id);
 	List<Menu_item> getAllMenu_item();
 	void updateMenu_item(Menu_item menu);
-	void deleteMenu_item(Menu_item m_id);  
+	void deleteMenu_item(Integer m_id);  
 }

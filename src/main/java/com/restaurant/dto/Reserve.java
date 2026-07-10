@@ -3,7 +3,7 @@ package com.restaurant.dto;
 import java.sql.Date;
 import java.sql.Time;
 
-public class ReserveDto {
+public class Reserve {
   private Integer reserve_id;
   private Integer c_id;
   private Integer t_id;
