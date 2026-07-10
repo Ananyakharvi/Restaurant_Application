@@ -10,5 +10,5 @@ public interface ChefDao {
 	List<Chef> getAllChef();
 	void updateChef(Chef chef);
 	Chef getByEmailAndPassword(String ch_email, String ch_pswd);
-	void deleteChef(Chef chef_id);
+	void deleteChef(Integer chef_id);
 }
