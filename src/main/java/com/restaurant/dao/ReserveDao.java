@@ -9,5 +9,5 @@ public interface ReserveDao {
 	Reserve getById(Integer reserve_id);
 	List<Reserve> getAllReserve();
 	void updateReserve(Reserve r);
-	void deleteCustomer(Integer reserve_id);
+	void deleteReserve(Integer reserve_id);
 }
