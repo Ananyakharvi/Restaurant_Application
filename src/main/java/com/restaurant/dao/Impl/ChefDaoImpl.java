@@ -170,12 +170,26 @@ private Connection con;
 
 	@Override
 	public void deleteChef(Integer chef_id) {
-		// TODO Auto-generated method stub
+		String query = "DELETE FROM chef WHERE chef_id=?";
+
+        try {
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setInt(1, chef_id);
+              ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 		
 	}
 		
 	
 		
-	}
+	
 
 
