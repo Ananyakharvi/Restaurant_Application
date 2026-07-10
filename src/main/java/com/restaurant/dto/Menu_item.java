@@ -1,6 +1,6 @@
 package com.restaurant.dto;
 
-public class Menu_itemDto {
+public class Menu_item {
   private Integer m_id;
   private String category;
   private String item_name;

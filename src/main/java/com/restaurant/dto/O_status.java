@@ -2,7 +2,7 @@ package com.restaurant.dto;
 
 import java.sql.Time;
 
-public class O_statusDto {
+public class O_status {
   private Integer status_id;
   private Integer o_id;
   private Integer chef_id;
