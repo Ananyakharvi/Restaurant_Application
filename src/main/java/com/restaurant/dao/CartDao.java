@@ -11,7 +11,6 @@ public interface CartDao {
 	cart getById(Integer cart_id);
 	List<cart> getAllCart();
 	void updateUser(cart c);
-	cart getByEmailAndPassword(String email, String password);
 	void deleteCart(Integer cart_id);
 }
 

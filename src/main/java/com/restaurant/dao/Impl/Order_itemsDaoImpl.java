@@ -18,141 +18,132 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 		this.con=Connector.requestConnection();
 	   }
 
-	@Override
-	public void addOrder_item(order_item or_item) {
-		String query = "INSERT INTO order_itemVALUES(?,?,?,?,?)";
+	   @Override
+	   public void addOrder_item(order_item item) {
+		   String query = "INSERT INTO order_item(order_id,menu_id,price,quantity) VALUES(?,?,?,?)";
 
-        try {
+	        try {
 
-            PreparedStatement ps = con.prepareStatement(query);
+	            PreparedStatement pstmt = con.prepareStatement(query);
 
-            ps.setInt(1, or_item.getO_id());
-            ps.setInt(2, or_item.getM_id());
-            ps.setDouble(3, or_item.getPrice());
-            ps.setInt(4, or_item.getQuantity());
-            ps.setDouble(5, or_item.getSub_total());
-            ps.executeUpdate();
+	            pstmt.setInt(1, item.getOrder_id());
+	            pstmt.setInt(2, item.getMenu_id());
+	            pstmt.setDouble(3, item.getPrice());
+	            pstmt.setInt(4, item.getQuantity());
+                 pstmt.executeUpdate();
 
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 		
 		
-	}
+	   }
 
-	@Override
-	public order_item getById(Integer oi_id) {
-		String query = "SELECT * FROM order_item WHERE oi_id=?";
+	   @Override
+	   public order_item getById(Integer item_id) {
+		    order_item item = null;
 
-        order_item item = null;
+	        String query = "SELECT * FROM order_item WHERE item_id=?";
 
-        try {
+	        try {
 
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, oi_id);
+	            PreparedStatement pstmt = con.prepareStatement(query);
+	            pstmt.setInt(1, item_id);
 
-            ResultSet rs = ps.executeQuery();
+	            ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+	            if (rs.next()) {
 
-                item = new order_item();
+	                item = new order_item();
 
-                item.setOi_id(rs.getInt("oi_id"));
-                item.setO_id(rs.getInt("o_id"));
-                item.setM_id(rs.getInt("m_id"));
-                item.setPrice(rs.getDouble("price"));
-                item.setQuantity(rs.getInt("quantity"));
-                item.setSub_total(rs.getDouble("sub_total"));
-            }
+	                item.setItem_id(rs.getInt("item_id"));
+	                item.setOrder_id(rs.getInt("order_id"));
+	                item.setMenu_id(rs.getInt("menu_id"));
+	                item.setPrice(rs.getDouble("price"));
+	                item.setQuantity(rs.getInt("quantity"));
+	            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		
+		return item;
+	   }
 
-        return item;
+	   @Override
+	   public List<order_item> getAllorder_item() {
+		   List<order_item> list = new ArrayList<>();
+
+	        String query = "SELECT * FROM order_item";
+
+	        try {
+
+	            PreparedStatement pstmt = con.prepareStatement(query);
+
+	            ResultSet rs = pstmt.executeQuery();
+
+	            while (rs.next()) {
+
+	                order_item item = new order_item();
+
+	                item.setItem_id(rs.getInt("item_id"));
+	                item.setOrder_id(rs.getInt("order_id"));
+	                item.setMenu_id(rs.getInt("menu_id"));
+	                item.setPrice(rs.getDouble("price"));
+	                item.setQuantity(rs.getInt("quantity"));
+
+	                list.add(item);
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return list;
+	   }
+
+	   @Override
+	   public void updateMenu_item(order_item item) {
+		   String query = "UPDATE order_item SET order_id=?, menu_id=?, price=?, quantity=? WHERE item_id=?";
+
+	        try {
+
+	            PreparedStatement pstmt = con.prepareStatement(query);
+
+	            pstmt.setInt(1, item.getOrder_id());
+	            pstmt.setInt(2, item.getMenu_id());
+	            pstmt.setDouble(3, item.getPrice());
+	            pstmt.setInt(4, item.getQuantity());
+	            pstmt.setInt(5, item.getItem_id());
+                pstmt.executeUpdate();
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		
+		
+	   }
+
+	   @Override
+	   public void deleteMenu_item(Integer item_id) {
+	       String query = "DELETE FROM order_item WHERE item_id=?";
+
+	        try {
+
+	            PreparedStatement pstmt = con.prepareStatement(query);
+
+	            pstmt.setInt(1, item_id);
+                pstmt.executeUpdate();
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	
-	}
+		
+	   }
 
-	@Override
-	public List<order_item> getAllorder_item() {
-		String query = "SELECT * FROM order_item";
-
-        List<order_item> list = new ArrayList<>();
-
-        try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                order_item item = new order_item();
-
-                item.setOi_id(rs.getInt("oi_id"));
-                item.setO_id(rs.getInt("o_id"));
-                item.setM_id(rs.getInt("m_id"));
-                item.setPrice(rs.getDouble("price"));
-                item.setQuantity(rs.getInt("quantity"));
-                item.setSub_total(rs.getDouble("sub_total"));
-
-                list.add(item);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return list;
-
-	}
-
-	@Override
-	public void updateMenu_item(order_item or_item) {
-
-        String query = "UPDATE order_item SET o_id=?, m_id=?, price=?, quantity=?, sub_total=? WHERE oi_id=?";
-
-        try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
-            ps.setInt(1, or_item.getO_id());
-            ps.setInt(2, or_item.getM_id());
-            ps.setDouble(3, or_item.getPrice());
-            ps.setInt(4, or_item.getQuantity());
-            ps.setDouble(5, or_item.getSub_total());
-            ps.setInt(6, or_item.getOi_id());
-            ps.executeUpdate();
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
+	
 		
 	
-
-	@Override
-	public void deleteMenu_item(Integer oi_id) {
-		String query = "DELETE FROM order_item WHERE oi_id=?";
-
-        try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
-             ps.setInt(1, oi_id);
-             ps.executeUpdate();
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-		
-	}
 
 

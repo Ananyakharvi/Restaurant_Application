@@ -30,7 +30,7 @@ private Connection con;
 
 	            ps.setString(1, chef.getChef_name());
 	            ps.setString(2, chef.getCh_email());
-	            ps.setLong(3, chef.getPhone_no());
+	            ps.setLong(3, chef.getCh_phone());
 	            ps.setString(4, chef.getCh_pswd());
 
 	           ps.executeUpdate();
@@ -64,7 +64,7 @@ private Connection con;
                 chef.setChef_id(rs.getInt("chef_id"));
                 chef.setChef_name(rs.getString("chef_name"));
                 chef.setCh_email(rs.getString("ch_email"));
-                chef.setPhone_no(rs.getLong("phone_no"));
+                chef.setCh_phone(rs.getLong("phone_no"));
                 chef.setCh_pswd(rs.getString("ch_pswd"));
 
             }
@@ -97,7 +97,7 @@ private Connection con;
                 chef.setChef_id(rs.getInt("chef_id"));
                 chef.setChef_name(rs.getString("chef_name"));
                 chef.setCh_email(rs.getString("ch_email"));
-                chef.setPhone_no(rs.getLong("phone_no"));
+                chef.setCh_phone(rs.getLong("phone_no"));
                 chef.setCh_pswd(rs.getString("ch_pswd"));
 
                 list.add(chef);
@@ -120,7 +120,7 @@ private Connection con;
 
 	            ps.setString(1, chef.getChef_name());
 	            ps.setString(2, chef.getCh_email());
-	            ps.setLong(3, chef.getPhone_no());
+	            ps.setLong(3, chef.getCh_phone());
 	            ps.setString(4, chef.getCh_pswd());
 	            ps.setInt(5, chef.getChef_id());
 
@@ -155,7 +155,7 @@ private Connection con;
                 chef.setChef_id(rs.getInt("chef_id"));
                 chef.setChef_name(rs.getString("chef_name"));
                 chef.setCh_email(rs.getString("ch_email"));
-                chef.setPhone_no(rs.getLong("phone_no"));
+                chef.setCh_phone(rs.getLong("phone_no"));
                 chef.setCh_pswd(rs.getString("ch_pswd"));
 
             }
