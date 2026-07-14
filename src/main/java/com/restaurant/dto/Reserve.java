@@ -5,10 +5,11 @@ import java.sql.Time;
 
 public class Reserve {
   private Integer reserve_id;
-  private Integer c_id;
+  private Integer user_id;
   private Integer t_id;
   private Date reserved_date;
   private Time reserved_time;
+  private Integer guests;
   private String status;
   public Integer getReserve_id() {
 	return reserve_id;
@@ -16,11 +17,11 @@ public class Reserve {
   public void setReserve_id(Integer reserve_id) {
 	this.reserve_id = reserve_id;
   }
-  public Integer getC_id() {
-	return c_id;
+  public Integer getUser_id() {
+	return user_id;
   }
-  public void setC_id(Integer c_id) {
-	this.c_id = c_id;
+  public void setUser_id(Integer user_id) {
+	this.user_id = user_id;
   }
   public Integer getT_id() {
 	return t_id;
@@ -40,11 +41,19 @@ public class Reserve {
   public void setReserved_time(Time reserved_time) {
 	this.reserved_time = reserved_time;
   }
+  public Integer getGuests() {
+	return guests;
+  }
+  public void setGuests(Integer guests) {
+	this.guests = guests;
+  }
   public String getStatus() {
 	return status;
   }
   public void setStatus(String status) {
 	this.status = status;
   }
+  
+  
   
 }

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.restaurant.dao.CustomerDao;
-import com.restaurant.dto.Customer;
+import com.restaurant.dao.UserDao;
+import com.restaurant.dto.User;
 import com.restaurant.utility.Connector;
 
-public class CustomerDaoImpl implements CustomerDao {
+public class CustomerDaoImpl implements UserDao {
 	
 private Connection con;
 
@@ -22,7 +22,7 @@ private Connection con;
 	}
 
 	@Override
-	public void addCustomer(Customer c) {
+	public void addCustomer(User c) {
 		String query = "INSERT INTO customer values(?,?,?,?,?)";
 
         try {
@@ -45,10 +45,10 @@ private Connection con;
 	
 
 	@Override
-	public Customer getById(Integer c_id) {
+	public User getById(Integer c_id) {
 		 String query = "SELECT * FROM customer WHERE c_id=?";
 
-	        Customer c = null;
+	        User c = null;
              try {
 	            PreparedStatement ps = con.prepareStatement(query);
                   ps.setInt(1, c_id);
@@ -57,7 +57,7 @@ private Connection con;
 
 	            if (rs.next()) {
 
-	                c = new Customer();
+	                c = new User();
 
 	                c.setC_id(rs.getInt("c_id"));
 	                c.setC_name(rs.getString("c_name"));
@@ -78,9 +78,9 @@ private Connection con;
 	
 
 	@Override
-	public List<Customer> getAllCustomer() {
+	public List<User> getAllCustomer() {
 		  String query = "SELECT * FROM customer";
-              List<Customer> list = new ArrayList<>();
+              List<User> list = new ArrayList<>();
 
 	        try {
 
@@ -90,7 +90,7 @@ private Connection con;
 
 	            while (rs.next()) {
 
-	                Customer c = new Customer();
+	                User c = new User();
 
 	                c.setC_id(rs.getInt("c_id"));
 	                c.setC_name(rs.getString("c_name"));
@@ -112,7 +112,7 @@ private Connection con;
 	}
 
 	@Override
-	public void updateCustomer(Customer c) {
+	public void updateCustomer(User c) {
 		String query = "UPDATE customer SET c_name=?, email=?, phone=?, c_pswd=?, created_at=? WHERE c_id=?";
 
         try {
@@ -137,10 +137,10 @@ private Connection con;
     }
 
 	@Override
-	public Customer getByEmailAndPassword(String email, String c_pswd) {
+	public User getByEmailAndPassword(String email, String c_pswd) {
 		String query = "SELECT * FROM customer WHERE email=? AND c_pswd=?";
 
-        Customer c = null;
+        User c = null;
 
         try {
 
@@ -153,7 +153,7 @@ private Connection con;
 
             if (rs.next()) {
 
-                c = new Customer();
+                c = new User();
 
                 c.setC_id(rs.getInt("c_id"));
                 c.setC_name(rs.getString("c_name"));

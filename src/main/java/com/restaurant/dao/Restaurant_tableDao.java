@@ -5,7 +5,6 @@ import java.util.List;
 import com.restaurant.dto.Restaurant_table;
 
 
-
 public interface Restaurant_tableDao {
 	void addReseve(Restaurant_table rt);
 	Restaurant_table getById(Integer t_id);

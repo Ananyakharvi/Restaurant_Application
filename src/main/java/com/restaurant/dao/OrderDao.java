@@ -6,8 +6,8 @@ import com.restaurant.dto.Orders;
 
 public interface OrderDao {
 	void addOrders(Orders order);
-	Orders getById(Integer o_id);
+	Orders getById(Integer order_id);
 	List<Orders> getAllorder_item();
-	void updateMenu_item(Orders order);
-	void deleteMenu_item(Integer o_id);
+	void updateOrder(Orders order);
+	void deleteOrder(Integer order_id);
 }
