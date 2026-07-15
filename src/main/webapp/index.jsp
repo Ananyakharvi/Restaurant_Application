@@ -1,77 +1,113 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Restaurant Home</title>
+<meta charset="UTF-8">
+<title>ADPS Restaurant</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.navbar {
+    background-color: #222;
+    padding: 15px;
+    text-align: center;
+}
+
+.navbar a {
+    color: #f8f8f8;
+    margin: 15px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    color: #ff9800;
+}
+
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1552566626-52f8b828add9') no-repeat center;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding-top: 150px;
+}
+
+.hero h1 {
+    font-size: 50px;
+    color: #ffcc00;
+}
+
+.hero p {
+    font-size: 20px;
+    color: #eeeeee;
+}
+
+.btn {
+    padding: 12px 25px;
+    background-color: #ff5722;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #e64a19;
+}
+
+.section {
+    padding: 40px;
+    text-align: center;
+    color: #444;
+}
+
+.footer {
+    background-color: #222;
+    color: #ddd;
+    padding: 15px;
+    text-align: center;
+}
+
+</style>
+
 </head>
+<body>
 
-<body style="margin:0; font-family:Arial; background:#0f172a; color:white;">
-
-<!-- Navbar -->
-<div style="display:flex; justify-content:space-between; align-items:center; padding:20px 50px; background:#1e293b;">
-    <h2 style="color:#38bdf8;">Savory</h2>
-
-    <div>
-        <a href="index.jsp" style="margin:15px; color:white; text-decoration:none;">Home</a>
-        <a href="menu.jsp" style="margin:15px; color:white; text-decoration:none;">Menu</a>
-        <a href="gallery.jsp" style="margin:15px; color:white; text-decoration:none;">Gallery</a>
-        <a href="contact.jsp" style="margin:15px; color:white; text-decoration:none;">Contact</a>
-    </div>
-
-    <a href="booking.jsp">
-        <button style="background:#38bdf8; color:black; padding:10px 20px; border:none; border-radius:5px;">
-            Book a Table
-        </button>
-    </a>
+<div class="navbar">
+    <a href="index.jsp">Home</a>
+    <a href="menu">Menu</a>
+    <a href="login.jsp">Login</a>
+    <a href="register.jsp">Register</a>
 </div>
 
-<!-- Hero Section -->
-<div style="
-    height:90vh;
-    background:linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.8)), url('images/food.jpg');
-    background-size:cover;
-    display:flex;
-    align-items:center;
-    padding-left:80px;
-">
+<div class="hero">
+    <h1>Welcome to ADPS Restaurant</h1>
+    <p>Delicious Food | Easy Ordering | Quick Service</p>
 
-    <div>
-        <p style="letter-spacing:2px; color:#94a3b8;">GOOD FOOD. GOOD MOOD.</p>
+    <br><br>
 
-        <h1 style="font-size:60px; margin:10px 0;">
-            Delicious Food for 
-            <span style="color:#a78bfa;">Every Mood</span>
-        </h1>
+    <a href="menu" class="btn">Explore Menu</a>
+</div>
 
-        <p style="margin:20px 0; color:#cbd5f5;">
-            Experience a delightful blend of flavors and excellent service.
-        </p>
+<div class="section">
+    <h2>About Us</h2>
+    <p>
+        Welcome to ADPS Restaurant! We provide delicious food with a smooth and easy ordering system.
+        Enjoy your favorite meals without waiting.
+    </p>
+</div>
 
-        <button style="
-            background:#a78bfa;
-            color:black;
-            padding:12px 20px;
-            border:none;
-            margin-right:10px;
-            border-radius:5px;
-        ">
-            Explore Menu
-        </button>
-
-        <a href="booking.jsp">
-        <button style="
-            border:1px solid #38bdf8;
-            background:transparent;
-            color:#38bdf8;
-            padding:12px 20px;
-            border-radius:5px;
-        ">
-            Book a Table
-        </button>
-        </a>
-    </div>
-
+<div class="footer">
+    <p>© 2026 ADPS Restaurant | All Rights Reserved</p>
 </div>
 
 </body>
-</html>
+</html>s
