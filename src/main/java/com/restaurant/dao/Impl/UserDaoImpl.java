@@ -28,7 +28,7 @@ private Connection con;
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, u.getFull_name());
             ps.setString(2, u.getEmail());
-            ps.setString(3, u.getPhone());
+            ps.setLong(3, u.getPhone());
             ps.setString(4, u.getPassword());
             ps.executeUpdate();
 
@@ -56,7 +56,7 @@ private Connection con;
 	                u.setUser_id(rs.getInt("user_id"));
 	                u.setFull_name(rs.getString("full_name"));
 	                u.setEmail(rs.getString("email"));
-	                u.setPhone(rs.getString("phone"));
+	                u.setPhone(rs.getLong("phone"));
 	                u.setPassword(rs.getString("password"));
 
 	   
@@ -89,7 +89,7 @@ private Connection con;
                 u.setUser_id(rs.getInt("user_id"));
                 u.setFull_name(rs.getString("full_name"));
                 u.setEmail(rs.getString("email"));
-                u.setPhone(rs.getString("phone"));
+                u.setPhone(rs.getLong("phone"));
                 u.setPassword(rs.getString("password"));
 
                 list.add(u);
@@ -113,7 +113,7 @@ private Connection con;
 
             ps.setString(1, u.getFull_name());
             ps.setString(2, u.getEmail());
-            ps.setString(3, u.getPhone());
+            ps.setLong(3, u.getPhone());
             ps.setString(4, u.getPassword());
             ps.setInt(5, u.getUser_id());
 
@@ -150,7 +150,7 @@ private Connection con;
 		            u.setUser_id(rs.getInt("user_id"));
 		            u.setFull_name(rs.getString("full_name"));
 		            u.setEmail(rs.getString("email"));
-		            u.setPhone(rs.getString("phone"));
+		            u.setPhone(rs.getLong("phone"));
 		            u.setPassword(rs.getString("password"));
 		        }
 
@@ -179,6 +179,35 @@ private Connection con;
         }
 
     }
+
+
+	@Override
+	public User getByEmail(String email) {
+		User u = null;
+
+	    String sql = "SELECT * FROM user WHERE email=?";
+
+	    try {
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, email);
+	        
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            u = new User();
+	            u.setUser_id(rs.getInt("user_id"));
+	            u.setFull_name(rs.getString("full_name"));
+	            u.setEmail(rs.getString("email"));
+	            u.setPhone(rs.getLong("phone"));
+	            u.setPassword(rs.getString("password"));
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return u;
+	}
 		
 		
 	}
