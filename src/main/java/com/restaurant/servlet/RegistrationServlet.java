@@ -26,8 +26,8 @@ public class RegistrationServlet extends HttpServlet {
 		u.setFull_name(req.getParameter("name"));
 		u.setEmail(req.getParameter("email"));
 		u.setPassword(req.getParameter("password"));
-//		u.setPhone(Long.parseLong(req.getParameter("phone")));
-		u.setPhone(req.getParameter("phone"));
+     	u.setPhone(Long.parseLong(req.getParameter("phone")));
+//		u.setPhone(req.getParameter("phone"));
 		
 		udao.addUser(u);
 		
