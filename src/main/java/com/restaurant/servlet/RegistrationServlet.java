@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
+<<<<<<< HEAD
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -101,3 +102,35 @@ public class RegistrationServlet extends HttpServlet {
         req.getRequestDispatcher("Register.jsp").forward(req, resp);
     }
 }
+=======
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		UserDao udao=new UserDaoImpl();
+		User u=new User();
+		
+		User alreadyExist=udao.getByEmail("email");
+		if(alreadyExist==null) {
+		u.setFull_name(req.getParameter("name"));
+		u.setEmail(req.getParameter("email"));
+		u.setPassword(req.getParameter("password"));
+
+		
+		udao.addUser(u);
+		
+		req.setAttribute("RegistrationSuccess","User Account Created");
+		RequestDispatcher rd=req.getRequestDispatcher("Registration.jsp");
+		rd.forward(req, resp);
+		
+		}
+		else {
+			req.setAttribute("RegistrationError","User Failed to Register");
+			RequestDispatcher rd=req.getRequestDispatcher("Registration.jsp");
+			rd.forward(req, resp);
+			
+			
+		}
+		
+		
+	}
+}
+>>>>>>> 5510ab10c20216bd9875970f3b8979b74c348f21
