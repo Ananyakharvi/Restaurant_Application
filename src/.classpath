@@ -2,5 +2,14 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="main/java"/>
+	<classpathentry kind="lib" path="C:/Users/DEEKSHA PATGAR/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.2.0-M2/jakarta.servlet-api-6.2.0-M2.jar" sourcepath="C:/Users/DEEKSHA PATGAR/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.2.0-M2/jakarta.servlet-api-6.2.0-M2-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="jakarta.servlet"/>
+			<attribute name="maven.artifactId" value="jakarta.servlet-api"/>
+			<attribute name="maven.version" value="6.2.0-M2"/>
+			<attribute name="maven.scope" value="provided"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

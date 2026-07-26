@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.restaurant.dao.Order_itemdao;
-import com.restaurant.dto.order_item;
+import com.restaurant.dto.Order_item;
 import com.restaurant.utility.Connector;
 
 public class Order_itemsDaoImpl implements Order_itemdao {
@@ -19,7 +19,7 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 	   }
 
 	   @Override
-	   public void addOrder_item(order_item item) {
+	   public void addOrder_item(Order_item item) {
 		   String query = "INSERT INTO order_item(order_id,menu_id,price,quantity) VALUES(?,?,?,?)";
 
 	        try {
@@ -40,8 +40,8 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 	   }
 
 	   @Override
-	   public order_item getById(Integer item_id) {
-		    order_item item = null;
+	   public Order_item getById(Integer item_id) {
+		    Order_item item = null;
 
 	        String query = "SELECT * FROM order_item WHERE item_id=?";
 
@@ -54,7 +54,7 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 
 	            if (rs.next()) {
 
-	                item = new order_item();
+	                item = new Order_item();
 
 	                item.setItem_id(rs.getInt("item_id"));
 	                item.setOrder_id(rs.getInt("order_id"));
@@ -71,8 +71,8 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 	   }
 
 	   @Override
-	   public List<order_item> getAllorder_item() {
-		   List<order_item> list = new ArrayList<>();
+	   public List<Order_item> getAllorder_item() {
+		   List<Order_item> list = new ArrayList<>();
 
 	        String query = "SELECT * FROM order_item";
 
@@ -84,7 +84,7 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 
 	            while (rs.next()) {
 
-	                order_item item = new order_item();
+	                Order_item item = new Order_item();
 
 	                item.setItem_id(rs.getInt("item_id"));
 	                item.setOrder_id(rs.getInt("order_id"));
@@ -102,7 +102,7 @@ public class Order_itemsDaoImpl implements Order_itemdao {
 	   }
 
 	   @Override
-	   public void updateMenu_item(order_item item) {
+	   public void updateMenu_item(Order_item item) {
 		   String query = "UPDATE order_item SET order_id=?, menu_id=?, price=?, quantity=? WHERE item_id=?";
 
 	        try {

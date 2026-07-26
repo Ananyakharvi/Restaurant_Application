@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.restaurant.dao.CartDao;
 import com.restaurant.dto.Chef;
-import com.restaurant.dto.cart;
+import com.restaurant.dto.Cart;
 import com.restaurant.utility.Connector;
 
 public class CartDaoImpl implements CartDao {
@@ -21,7 +21,7 @@ private Connection con;
 	}
 
 	@Override
-	public void addCart(cart c) {
+	public void addCart(Cart c) {
 	       String sql = "INSERT INTO cart(user_id, menu_id, quantity) VALUES(?,?,?)";
 
 	        try {
@@ -40,8 +40,8 @@ private Connection con;
 	}
 
 	@Override
-	public cart getById(Integer cart_id) {
-		cart c = null;
+	public Cart getById(Integer cart_id) {
+		Cart c = null;
 
         String sql = "SELECT * FROM cart WHERE cart_id=?";
 
@@ -54,7 +54,7 @@ private Connection con;
 
             if (rs.next()) {
 
-                c = new cart();
+                c = new Cart();
 
                 c.setCart_id(rs.getInt("cart_id"));
                 c.setUser_id(rs.getInt("user_id"));
@@ -71,8 +71,8 @@ private Connection con;
 	}
 
 	@Override
-	public List<cart> getAllCart() {
-        List<cart> list = new ArrayList<>();
+	public List<Cart> getAllCart() {
+        List<Cart> list = new ArrayList<>();
 
         String sql = "SELECT * FROM cart";
 
@@ -84,7 +84,7 @@ private Connection con;
 
             while (rs.next()) {
 
-                cart c = new cart();
+                Cart c = new Cart();
 
                 c.setCart_id(rs.getInt("cart_id"));
                 c.setUser_id(rs.getInt("user_id"));
@@ -103,7 +103,7 @@ private Connection con;
 	}
 
 	@Override
-	public void updateUser(cart c) {
+	public void updateCart(Cart c) {
 		String sql = "UPDATE cart SET user_id=?, menu_id=?, quantity=? WHERE cart_id=?";
 
         try {

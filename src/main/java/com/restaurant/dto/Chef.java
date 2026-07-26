@@ -6,6 +6,7 @@ public class Chef {
   private String ch_email;
   private Long ch_phone;
   private String ch_pswd;
+ 
   public Integer getChef_id() {
 	return chef_id;
   }

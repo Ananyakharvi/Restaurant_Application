@@ -1,6 +1,6 @@
 package com.restaurant.dto;
 
-public class cart {
+public class Cart {
     private Integer cart_id;
     private Integer user_id;
     private Integer menu_id;

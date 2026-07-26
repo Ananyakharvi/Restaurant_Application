@@ -1,6 +1,6 @@
 package com.restaurant.dto;
 
-public class order_item {
+public class Order_item {
    private Integer item_id;
    private Integer order_id;
    private Integer menu_id;
