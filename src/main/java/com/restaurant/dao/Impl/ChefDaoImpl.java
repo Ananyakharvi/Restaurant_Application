@@ -12,184 +12,160 @@ import com.restaurant.dto.Chef;
 import com.restaurant.utility.Connector;
 
 public class ChefDaoImpl implements ChefDao {
-	
-private Connection con;
+    private Connection con;
 
-	
-	public ChefDaoImpl() {
-		this.con=Connector.requestConnection();
-	}
+    public ChefDaoImpl() {
+        this.con = Connector.requestConnection();
+    }
 
-	@Override
-	public void addChef(Chef chef) {
-		 String query = "INSERT INTO chef VALUES(?,?,?,?)";
+    private Connection getConnection() {
+        try {
+            if (this.con == null || this.con.isClosed()) {
+                this.con = Connector.requestConnection();
+            }
+        } catch (SQLException e) {
+            this.con = Connector.requestConnection();
+        }
+        return this.con;
+    }
 
-	        try {
+    @Override
+    public void addChef(Chef chef) {
+        Connection conn = getConnection();
+        if (conn == null) return;
 
-	            PreparedStatement ps = con.prepareStatement(query);
+        String query = "INSERT INTO chef(chef_name, ch_email, phone_no, ch_pswd) VALUES(?,?,?,?)";
 
-	            ps.setString(1, chef.getChef_name());
-	            ps.setString(2, chef.getCh_email());
-	            ps.setLong(3, chef.getCh_phone());
-	            ps.setString(4, chef.getCh_pswd());
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, chef.getChef_name());
+            ps.setString(2, chef.getCh_email());
+            ps.setObject(3, chef.getCh_phone());
+            ps.setString(4, chef.getCh_pswd());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	           ps.executeUpdate();
+    @Override
+    public Chef getById(Integer chef_id) {
+        Connection conn = getConnection();
+        if (conn == null) return null;
 
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-		
-		
-	}
-
-	@Override
-	public Chef getById(Integer chef_id) {
-		String query = "SELECT * FROM chef WHERE chef_id=?";
-
+        String query = "SELECT * FROM chef WHERE chef_id=?";
         Chef chef = null;
 
         try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, chef_id);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
                 chef = new Chef();
-
                 chef.setChef_id(rs.getInt("chef_id"));
                 chef.setChef_name(rs.getString("chef_name"));
                 chef.setCh_email(rs.getString("ch_email"));
                 chef.setCh_phone(rs.getLong("phone_no"));
                 chef.setCh_pswd(rs.getString("ch_pswd"));
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return chef;
-		
-	
-	}
+    }
 
-	@Override
-	public List<Chef> getAllChef() {
-		String query = "SELECT * FROM chef";
-
+    @Override
+    public List<Chef> getAllChef() {
         List<Chef> list = new ArrayList<>();
+        Connection conn = getConnection();
+        if (conn == null) return list;
+
+        String query = "SELECT * FROM chef";
 
         try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-
                 Chef chef = new Chef();
-
                 chef.setChef_id(rs.getInt("chef_id"));
                 chef.setChef_name(rs.getString("chef_name"));
                 chef.setCh_email(rs.getString("ch_email"));
                 chef.setCh_phone(rs.getLong("phone_no"));
                 chef.setCh_pswd(rs.getString("ch_pswd"));
-
                 list.add(chef);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return list;
-	}
+    }
 
-	@Override
-	public void updateChef(Chef chef) {
-		 String query = "UPDATE chef SET chef_name=?, ch_email=?, phone_no=?, ch_pswd=? WHERE chef_id=?";
+    @Override
+    public void updateChef(Chef chef) {
+        Connection conn = getConnection();
+        if (conn == null) return;
 
-	        try {
+        String query = "UPDATE chef SET chef_name=?, ch_email=?, phone_no=?, ch_pswd=? WHERE chef_id=?";
 
-	            PreparedStatement ps = con.prepareStatement(query);
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, chef.getChef_name());
+            ps.setString(2, chef.getCh_email());
+            ps.setObject(3, chef.getCh_phone());
+            ps.setString(4, chef.getCh_pswd());
+            ps.setObject(5, chef.getChef_id());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	            ps.setString(1, chef.getChef_name());
-	            ps.setString(2, chef.getCh_email());
-	            ps.setLong(3, chef.getCh_phone());
-	            ps.setString(4, chef.getCh_pswd());
-	            ps.setInt(5, chef.getChef_id());
+    @Override
+    public Chef getByEmailAndPassword(String ch_email, String ch_pswd) {
+        Connection conn = getConnection();
+        if (conn == null) return null;
 
-	            int result = ps.executeUpdate();
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-		
-		
-	}
-
-	@Override
-	public Chef getByEmailAndPassword(String ch_email, String ch_pswd) {
-		String query = "SELECT * FROM chef WHERE ch_email=? AND ch_pswd=?";
-
+        String query = "SELECT * FROM chef WHERE ch_email=? AND ch_pswd=?";
         Chef chef = null;
 
         try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, ch_email);
             ps.setString(2, ch_pswd);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
                 chef = new Chef();
-
                 chef.setChef_id(rs.getInt("chef_id"));
                 chef.setChef_name(rs.getString("chef_name"));
                 chef.setCh_email(rs.getString("ch_email"));
                 chef.setCh_phone(rs.getLong("phone_no"));
                 chef.setCh_pswd(rs.getString("ch_pswd"));
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return chef;
+    }
 
-	}
+    @Override
+    public void deleteChef(Integer chef_id) {
+        Connection conn = getConnection();
+        if (conn == null) return;
 
-	@Override
-	public void deleteChef(Integer chef_id) {
-		String query = "DELETE FROM chef WHERE chef_id=?";
+        String query = "DELETE FROM chef WHERE chef_id=?";
 
         try {
-
-            PreparedStatement ps = con.prepareStatement(query);
-
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, chef_id);
-              ps.executeUpdate();
-
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
-		
-	}
-		
-	
-		
-	
-
-
+}

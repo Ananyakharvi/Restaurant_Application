@@ -31,6 +31,15 @@ public class User {
 	public void setPhone(Long phone) {
 		this.phone = phone;
 	}
+	public void setPhone(String phoneStr) {
+		if (phoneStr != null && !phoneStr.trim().isEmpty()) {
+			try {
+				this.phone = Long.parseLong(phoneStr.trim());
+			} catch (NumberFormatException e) {
+				this.phone = 0L;
+			}
+		}
+	}
 	public String getPassword() {
 		return password;
 	}

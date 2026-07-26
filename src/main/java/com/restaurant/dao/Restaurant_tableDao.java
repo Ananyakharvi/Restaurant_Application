@@ -6,6 +6,7 @@ import com.restaurant.dto.Restaurant_table;
 
 
 public interface Restaurant_tableDao {
+	void addRestaurant_table(Restaurant_table rt);
 	void addReseve(Restaurant_table rt);
 	Restaurant_table getById(Integer t_id);
 	List<Restaurant_table> getAllRestaurant_table();

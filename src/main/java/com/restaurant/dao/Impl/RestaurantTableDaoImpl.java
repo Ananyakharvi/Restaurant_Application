@@ -12,142 +12,132 @@ import com.restaurant.dto.Restaurant_table;
 import com.restaurant.utility.Connector;
 
 public class RestaurantTableDaoImpl implements Restaurant_tableDao {
-	
-	private Connection con;
+    private Connection con;
 
-	   public RestaurantTableDaoImpl() {
-		this.con=Connector.requestConnection();
-	   }
+    public RestaurantTableDaoImpl() {
+        this.con = Connector.requestConnection();
+    }
 
-	   @Override
-	   public void addReseve(Restaurant_table rt) {
-		   String query = "INSERT INTO restaurant_table(table_number, capacity, status) VALUES(?,?,?)";
+    private Connection getConnection() {
+        try {
+            if (this.con == null || this.con.isClosed()) {
+                this.con = Connector.requestConnection();
+            }
+        } catch (SQLException e) {
+            this.con = Connector.requestConnection();
+        }
+        return this.con;
+    }
 
-	        try {
+    @Override
+    public void addRestaurant_table(Restaurant_table rt) {
+        addReseve(rt);
+    }
 
-	            PreparedStatement pstmt = con.prepareStatement(query);
+    @Override
+    public void addReseve(Restaurant_table rt) {
+        Connection conn = getConnection();
+        if (conn == null) return;
 
-	            pstmt.setInt(1, rt.getTable_number());
-	            pstmt.setInt(2, rt.getCapacity());
-	            pstmt.setString(3, rt.getStatus());
-                pstmt.executeUpdate();
+        String query = "INSERT INTO restaurant_table(table_number, capacity, status) VALUES(?,?,?)";
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-		
-	   }
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setObject(1, rt.getTable_number());
+            pstmt.setObject(2, rt.getCapacity());
+            pstmt.setString(3, rt.getStatus());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	   @Override
-	   public Restaurant_table getById(Integer t_id) {
-		   Restaurant_table rt = null;
+    @Override
+    public Restaurant_table getById(Integer t_id) {
+        Connection conn = getConnection();
+        if (conn == null) return null;
 
-	        String query = "SELECT * FROM restaurant_table WHERE t_id=?";
+        Restaurant_table rt = null;
+        String query = "SELECT * FROM restaurant_table WHERE t_id=?";
 
-	        try {
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, t_id);
+            ResultSet rs = pstmt.executeQuery();
 
-	            PreparedStatement pstmt = con.prepareStatement(query);
+            if (rs.next()) {
+                rt = new Restaurant_table();
+                rt.setT_id(rs.getInt("t_id"));
+                rt.setTable_number(rs.getInt("table_number"));
+                rt.setCapacity(rs.getInt("capacity"));
+                rt.setStatus(rs.getString("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-	            pstmt.setInt(1, t_id);
+        return rt;
+    }
 
-	            ResultSet rs = pstmt.executeQuery();
+    @Override
+    public List<Restaurant_table> getAllRestaurant_table() {
+        List<Restaurant_table> list = new ArrayList<>();
+        Connection conn = getConnection();
+        if (conn == null) return list;
 
-	            if (rs.next()) {
+        String query = "SELECT * FROM restaurant_table";
 
-	                rt = new Restaurant_table();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
 
-	                rt.setT_id(rs.getInt("t_id"));
-	                rt.setTable_number(rs.getInt("table_number"));
-	                rt.setCapacity(rs.getInt("capacity"));
-	                rt.setStatus(rs.getString("status"));
+            while (rs.next()) {
+                Restaurant_table rt = new Restaurant_table();
+                rt.setT_id(rs.getInt("t_id"));
+                rt.setTable_number(rs.getInt("table_number"));
+                rt.setCapacity(rs.getInt("capacity"));
+                rt.setStatus(rs.getString("status"));
+                list.add(rt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-	            }
+        return list;
+    }
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+    @Override
+    public void updateRestaurant_table(Restaurant_table rt) {
+        Connection conn = getConnection();
+        if (conn == null) return;
 
-	        return rt;
+        String query = "UPDATE restaurant_table SET table_number=?, capacity=?, status=? WHERE t_id=?";
 
-	   }
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setObject(1, rt.getTable_number());
+            pstmt.setObject(2, rt.getCapacity());
+            pstmt.setString(3, rt.getStatus());
+            pstmt.setObject(4, rt.getT_id());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	   @Override
-	   public List<Restaurant_table> getAllRestaurant_table() {
-		   List<Restaurant_table> list = new ArrayList<>();
+    @Override
+    public void deleteRestaurant_table(Integer t_id) {
+        Connection conn = getConnection();
+        if (conn == null) return;
 
-	        String query = "SELECT * FROM restaurant_table";
+        String query = "DELETE FROM restaurant_table WHERE t_id=?";
 
-	        try {
-
-	            PreparedStatement pstmt = con.prepareStatement(query);
-
-	            ResultSet rs = pstmt.executeQuery();
-
-	            while (rs.next()) {
-
-	                Restaurant_table rt = new Restaurant_table();
-
-	                rt.setT_id(rs.getInt("t_id"));
-	                rt.setTable_number(rs.getInt("table_number"));
-	                rt.setCapacity(rs.getInt("capacity"));
-	                rt.setStatus(rs.getString("status"));
-
-	                list.add(rt);
-
-	            }
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-
-	        return list;
-
-	   }
-
-	   @Override
-	   public void updateRestaurant_table(Restaurant_table rt) {
-		   String query = "UPDATE restaurant_table SET table_number=?, capacity=?, status=? WHERE t_id=?";
-
-	        try {
-
-	            PreparedStatement pstmt = con.prepareStatement(query);
-
-	            pstmt.setInt(1, rt.getTable_number());
-	            pstmt.setInt(2, rt.getCapacity());
-	            pstmt.setString(3, rt.getStatus());
-	            pstmt.setInt(4, rt.getT_id());
-                pstmt.executeUpdate();
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-		
-		
-	   }
-
-	   @Override
-	   public void deleteRestaurant_table(Integer t_id) {
-		   String query = "DELETE FROM restaurant_table WHERE t_id=?";
-
-	        try {
-
-	            PreparedStatement pstmt = con.prepareStatement(query);
-
-	            pstmt.setInt(1, t_id);
-                pstmt.executeUpdate();
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-
-	    }
-		
-		
-	   }
-
-
-	
-		
-	
-
-
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, t_id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
