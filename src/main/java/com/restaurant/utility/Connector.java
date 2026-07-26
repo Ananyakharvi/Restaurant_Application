@@ -5,21 +5,26 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connector {
-	public static Connection requestConnection() {
-		Connection con=null;
-		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/RESTAURANT", "root", "Dee@131929");
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return con;
-		
-		
-	}
+    private static Connection con = null;
 
-	
+    public static Connection requestConnection() {
+        try {
+            if (con == null || con.isClosed()) {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+                String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/restaurant_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+                String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "root";
+                String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : "Sangu@1234";
 
+                con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+            }
+        } catch (ClassNotFoundException e) {
+            System.err.println("❌ MySQL JDBC Driver Not Found! Ensure mysql-connector-j jar is in WEB-INF/lib.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("❌ Failed to connect to MySQL Database! Check if MySQL server is running on localhost:3306 with password Sangu@1234.");
+            e.printStackTrace();
+        }
+        return con;
+    }
 }

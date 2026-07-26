@@ -11,8 +11,30 @@ import com.restaurant.dto.Reserve;
 import com.restaurant.utility.Connector;
 
 public class ReserveDaoImpl implements ReserveDao {
-	private Connection con;
+    private Connection con;
 
+<<<<<<< HEAD
+    public ReserveDaoImpl() {
+        this.con = Connector.requestConnection();
+    }
+
+    @Override
+    public void addReserve(Reserve r) {
+        String sql = "INSERT INTO reserve(c_id, t_id, reserved_date, reserved_time, status) VALUES(?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setObject(1, r.getUser_id());
+            ps.setObject(2, r.getT_id());
+            ps.setDate(3, r.getReserved_date());
+            ps.setTime(4, r.getReserved_time());
+            ps.setString(5, r.getStatus() != null ? r.getStatus() : "PENDING");
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+=======
 	public ReserveDaoImpl() {
 		this.con = Connector.requestConnection();
 	}
@@ -38,11 +60,40 @@ public class ReserveDaoImpl implements ReserveDao {
 		}
 
 	}
+>>>>>>> 5510ab10c20216bd9875970f3b8979b74c348f21
 
-	@Override
-	public Reserve getById(Integer reserve_id) {
-		Reserve reserve = null;
+    @Override
+    public void addReseve(Reserve r) {
+        addReserve(r);
+    }
 
+<<<<<<< HEAD
+    @Override
+    public Reserve getById(Integer reserve_id) {
+        Reserve reserve = null;
+        String sql = "SELECT * FROM reserve WHERE reserve_id=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, reserve_id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                reserve = new Reserve();
+                reserve.setReserve_id(rs.getInt("reserve_id"));
+                reserve.setUser_id(rs.getInt("c_id"));
+                reserve.setT_id(rs.getInt("t_id"));
+                reserve.setReserved_date(rs.getDate("reserved_date"));
+                reserve.setReserved_time(rs.getTime("reserved_time"));
+                reserve.setStatus(rs.getString("status"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return reserve;
+    }
+=======
 		String sql = "SELECT * FROM reserve WHERE reserve_id=?";
 
 		try {
@@ -71,9 +122,66 @@ public class ReserveDaoImpl implements ReserveDao {
 		}
 
 		return reserve;
+>>>>>>> 5510ab10c20216bd9875970f3b8979b74c348f21
 
-	}
+    @Override
+    public List<Reserve> getAllReserve() {
+        List<Reserve> list = new ArrayList<>();
+        String sql = "SELECT * FROM reserve";
 
+<<<<<<< HEAD
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserve reserve = new Reserve();
+                reserve.setReserve_id(rs.getInt("reserve_id"));
+                reserve.setUser_id(rs.getInt("c_id"));
+                reserve.setT_id(rs.getInt("t_id"));
+                reserve.setReserved_date(rs.getDate("reserved_date"));
+                reserve.setReserved_time(rs.getTime("reserved_time"));
+                reserve.setStatus(rs.getString("status"));
+                list.add(reserve);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    @Override
+    public void updateReserve(Reserve r) {
+        String sql = "UPDATE reserve SET c_id=?, t_id=?, reserved_date=?, reserved_time=?, status=? WHERE reserve_id=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setObject(1, r.getUser_id());
+            ps.setObject(2, r.getT_id());
+            ps.setDate(3, r.getReserved_date());
+            ps.setTime(4, r.getReserved_time());
+            ps.setString(5, r.getStatus());
+            ps.setInt(6, r.getReserve_id());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteReserve(Integer reserve_id) {
+        String sql = "DELETE FROM reserve WHERE reserve_id=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, reserve_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+=======
 	@Override
 	public List<Reserve> getAllReserve() {
 		List<Reserve> list = new ArrayList<>();
@@ -148,4 +256,5 @@ public class ReserveDaoImpl implements ReserveDao {
 
 	}
 
+>>>>>>> 5510ab10c20216bd9875970f3b8979b74c348f21
 }
